@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let Mobile = function () {
+            this.status = false;
+            this.battery = 3;
+            this.inbox = [];
+            this.sent = [];
+
+            this.power = function () {
+                if(this.battery<20) {
+                    alert('Pin yếu! Hãy sạc pin!');
+                }
+                if(!this.status)
+                this.status = true;
+                else this.status = false;
+            }
+
+            this.checkStatus = function () {
+                if(this.status)
+                     return this.status;
+                else {
+                    alert("Bạn chưa khởi động điện thoại")
+                }
+            }
+
+            this.charge = function () { 
+                this.battery += 1;    
+                console.log(this.battery);
+                if(this.battery<100)
+                setTimeout(this.charge(),5000*60);
+            }
+
+            // this.composeMessage = function (mes) {
+            //    if(this.status) {
+            //         this.compose.push(mes);
+            //         this.decrease();}
+            //     else {
+            //         alert("Bạn chưa khởi động điện thoại")
+            //     }
+            // }
+
+            this.receiveMessage = function (mes,mobile) {
+                if(this.status) {
+                    this.inbox.push(mes); }
+                else {
+                    alert("Bạn chưa khởi động điện thoại")
+                }
+            }
+
+            this.sentMessage = function (mes,mobile) {
+                if(this.status) {
+                    this.sent.push(mes);
+                    mobile.receiveMessage(mes);
+                    this.decrease();}
+                else {
+                    alert("Bạn chưa khởi động điện thoại")
+                }
+            }
+
+            this.getInbox = function () {
+                if(this.status) {
+                    return this.inbox;
+                    this.decrease(); }
+                else {
+                    alert("Bạn chưa khởi động điện thoại")
+                }
+            }
+
+            this.getSent = function () {
+                if(this.status) {
+                    return this.sent;
+                    this.decrease(); }
+                else {
+                    alert("Bạn chưa khởi động điện thoại")
+                }
+            }
+
+            this.decrease =  function () {
+                this.battery--;
+                if(this.battery == 0) {
+                    this.status = false;
+                    alert("Máy tắt nguồn!!")
+                }
+            }
+        };
+
+        let nokia = new Mobile();
+        nokia.power();
+        let iphone = new Mobile();
+        iphone.power();
+        console.log(`Pin nokika: ${nokia.battery}`);
+        console.log(`Pin Iphone: ${iphone.battery}`);
+        nokia.sentMessage(`Chiều làm trận banh không?`,iphone);
+        iphone.sentMessage("Mấy giờ? Sân mô?",nokia);;
+        nokia.sentMessage("5h Nguyễn Chánh",iphone);
+        iphone.sentMessage("Oke",nokia);
+        console.log(iphone.getInbox());
+        console.log(iphone.getSent());
+        // console.log(nokia.getInbox());
+        // console.log(nokia.getSent());
+        console.log(nokia.checkStatus());
+        nokia.sentMessage(`T qua chở nha?`,iphone);
+        nokia.sentMessage(`T qua chở nha?`,iphone);
+        console.log(`Pin nokika: ${nokia.battery}`); 
+        console.log(iphone.getInbox());
+        console.log(nokia.battery);
+        nokia.charge();
+        nokia.power();
+        console.log(nokia.checkStatus());
+    </script>
+</body>
+</html>
